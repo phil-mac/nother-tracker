@@ -4,46 +4,31 @@ import {useSelector, useDispatch} from 'react-redux';
 import {setScratch, setAuthUser} from './actions';
 import './App.css'; 
 
-import * as firebase from 'firebase';
+import {database, signInWithGoogle, signOut, useAuth} from './firebase';
 
-const config = {
-    apiKey: "AIzaSyAU_qDG9me2Pxi7PeK2L576lDX6WaB7MEo",
-    authDomain: "nother-tracker.firebaseapp.com",
-    databaseURL: "https://nother-tracker.firebaseio.com",
-    projectId: "nother-tracker",
-    storageBucket: "nother-tracker.appspot.com",
-    messagingSenderId: "529311583440",
-    appId: "1:529311583440:web:307f12f3ddcdfd8893a2d5"
-  };
+import TestComp from './components/TestComp';
 
 function App() {
   const dispatch = useDispatch();
   const scratch = useSelector(state => state.scratchState.scratch);
   const authUser = useSelector(state => state.sessionState.authUser);
 
+  const user = useAuth();
+
   useEffect(() => {
-    firebase.initializeApp(config);
-
-    const listener = firebase.auth().onAuthStateChanged(authUserNew => {
-      if(authUserNew){
-        console.log('got new auth user, is not null: ');
-        console.log(authUserNew);
-        const userId = authUserNew.uid;
-        dispatch(setAuthUser(userId))
-        getNoteFromServer(userId);
-      } else{
-        console.log('got new auth user, IS NULL');
-        dispatch(setAuthUser(null));
-      }
-    })
-
-    return () => listener();
-  }, []);
+    if(user){
+      const userId = user.uid;
+      dispatch(setAuthUser(userId));
+      getNoteFromServer(userId);
+  
+    }else{
+      dispatch(setAuthUser(null));
+    }
+  }, [user])
 
   const getNoteFromServer = (authUserNew) => {
     console.log('get note from server for userId: ' + authUserNew);
-    firebase
-      .database()
+    database
       .ref(`scratchTest/${authUserNew}`)
       .on("value", snapshot => {
         const val = snapshot.val();
@@ -60,31 +45,10 @@ function App() {
   const setNoteOnServer = e => {
     const newText = e.target.value;
     dispatch(setScratch(newText));
-
-    firebase
-      .database()
+    database
       .ref(`scratchTest/${authUser}`)
       .set(newText);
   };
-
-  const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider).then(result => {
-      console.log('sign in successful: ');
-    }).catch(error => {
-      console.log('error in sign in: ');
-      console.log(error);
-    })
-  }
-
-  const signOut = () => {
-    firebase.auth().signOut().then(() => {
-      console.log('sign out successful')
-    }).catch((err) => {
-      console.log('error is sign out: ')
-      console.log(err);
-    })
-  }
 
   return (
     <div className="App">
@@ -106,6 +70,8 @@ function App() {
           />
           <hr/>
         </div>}
+
+        <TestComp />
       </header>
     </div>
   );
