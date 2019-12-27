@@ -2,6 +2,8 @@ import {database, auth, googleProvider} from '../firebase';
 
 export const SET_AUTH_USER = 'SET_AUTH_USER';
 export const SET_SCRATCH = 'SET_SCRATCH';
+export const SET_ROUTINE = 'SET_ROUTINE';
+
 
 export const fetchAuthUser = () => dispatch => {
     auth.onAuthStateChanged(user => {

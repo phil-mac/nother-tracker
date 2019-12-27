@@ -5,6 +5,7 @@ import {signInWithGoogle, signOut, fetchAuthUser, setScratch} from './actions';
 import './App.css'; 
 
 import TestComp from './components/TestComp';
+import RoutineEditor from './components/RoutineEditor';
 
 function App() {
   const dispatch = useDispatch();
@@ -24,6 +25,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>'nother tracker</h1>
+        <RoutineEditor />
+
         {authUser
         ? <button onClick={signOut}>Sign Out</button>
         : <button onClick={signInWithGoogle}>Sign in With Google</button>
@@ -41,7 +44,6 @@ function App() {
           <hr/>
         </div>}
 
-        <TestComp />
       </header>
     </div>
   );
