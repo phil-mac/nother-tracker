@@ -35,7 +35,7 @@ export const routineReducer = (state = initialState, action) => {
         case SET_ROUTINE: {
             return{
                 ...state,
-                routine: action.payload
+                routine: [...state.routine, action.payload]
             }
         }
         default:

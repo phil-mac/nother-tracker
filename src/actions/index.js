@@ -71,3 +71,10 @@ export const signOut = () => {
         console.log(err);
     })
 }
+
+export const addGroupToRoutine = newGroup => {
+    return{
+        type: SET_ROUTINE,
+        payload: newGroup
+    }
+}

@@ -14,9 +14,9 @@ export default (props) => {
 
 const RoutineItem = (props) => {
     return(
-        <div style={{border: '1px solid grey'}}>
-            <input placeholder='value' value={props.item.val}/> 
-            <input placeholder='name'value={props.item.name}/>
+        <div style={{border: '1px solid grey', display: 'flex'}}>
+            <input placeholder={props.item.val} /> 
+            <span>{props.item.name}</span>
         </div>
     )
 }
