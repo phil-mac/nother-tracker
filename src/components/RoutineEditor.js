@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import RoutineGroup from './RoutineGroup';
@@ -18,7 +18,14 @@ export default () => {
     const saveGroup = (groupData) => {
         // dispatch action to add group to routine
         dispatch(addGroupToRoutine(groupData));
+        console.log('added group data to store: ')
+        console.log(groupData);
     }
+
+    useEffect(() => {
+        console.log('routine: ');
+        console.log(routine);
+    },[routine])
 
     return(
         <div>
