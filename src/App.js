@@ -6,11 +6,14 @@ import './App.css';
 
 import TestComp from './components/TestComp';
 import RoutineEditor from './components/RoutineEditor';
+import RoutineTracker from './components/RoutineTracker';
+
 
 function App() {
   const dispatch = useDispatch();
   const scratch = useSelector(state => state.scratchState.scratch);
   const authUser = useSelector(state => state.sessionState.authUser);
+  const [editRoutine, setEditRoutine] = useState(false);
 
   useEffect(() => {
     dispatch(fetchAuthUser());
@@ -25,7 +28,14 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>'nother tracker</h1>
-        <RoutineEditor />
+        <button onClick={() => setEditRoutine(false)}>Track</button>
+        <button onClick={() => setEditRoutine(true)}>Edit</button>
+        <hr />
+        {editRoutine
+        ? <RoutineEditor />
+        : <RoutineTracker/>
+        }
+        
 
         {authUser
         ? <button onClick={signOut}>Sign Out</button>

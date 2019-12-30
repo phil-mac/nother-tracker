@@ -3,36 +3,52 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import RoutineGroup from './RoutineGroup';
 import GroupEditor from './GroupEditor';
-import {addGroupToRoutine} from '../actions'
+import {addGroupToRoutine, deleteGroupFromRoutine, reorderGroupInRoutine, setRoutine} from '../actions'
 
 export default () => {
     const dispatch = useDispatch();
     const routine = useSelector(state => state.routineState.routine);
+    const authUser = useSelector(state => state.sessionState.authUser);
 
     const [addingGroup, setAddingGroup] = useState(true);
+
+    useEffect(() => {
+        console.log('routine: ');
+        console.log(routine);
+        dispatch(setRoutine(routine, authUser));
+    },[routine])
 
     const addGroup = () => {
         setAddingGroup(true);
     }
 
     const saveGroup = (groupData) => {
-        // dispatch action to add group to routine
         dispatch(addGroupToRoutine(groupData));
-        console.log('added group data to store: ')
-        console.log(groupData);
     }
 
-    useEffect(() => {
-        console.log('routine: ');
-        console.log(routine);
-    },[routine])
+    const deleteGroup = (groupId) => {
+        console.log('delete group id', groupId);
+        dispatch(deleteGroupFromRoutine(groupId));
+    }
+
+    const moveGroup = (groupId) => {
+        dispatch(reorderGroupInRoutine(groupId));
+    }
 
     return(
         <div>
-            <hr />
-            <h3>Routine</h3>
+            <h3>Edit Routine</h3>
             {routine.map((group, index) => (
-                <RoutineGroup group={group} key={index}/>
+                <div key={index}>
+                    <div style={{border:'1px solid white'}}>
+                        <RoutineGroup  group={group}/>
+                        <button onClick={() => deleteGroup(index)}>Delete</button>
+                        <button onClick={() => moveGroup(index)}>Move Up</button>
+                    </div>
+                    <br/>
+                    <br/>
+
+                </div>
             ))}
             {addingGroup && <GroupEditor saveGroup={saveGroup}/>}
             <button onClick={addGroup}> + </button>
