@@ -24,6 +24,7 @@ export default () => {
 
     useEffect(() => {
         dispatch(setTrack(track, authUser));
+        console.log('track changed in RoutineTracker')
     }, [track])
 
     const setEntryDate = (e, entryId) => {
@@ -74,10 +75,10 @@ const RoutineGroup = (props) => {
 const RoutineItem = (props) => {
     const dispatch = useDispatch();
 
-    const [itemVal, setItemVal] = useState(props.item.input);
+    // const [itemVal, setItemVal] = useState(props.item.input);
 
     const handleChange = e => {
-        setItemVal(e.target.value);
+        // setItemVal(e.target.value);
 
         dispatch(editEntryFieldInTrack(props.entryId, props.groupId, props.itemId, e.target.value))
 
@@ -86,7 +87,7 @@ const RoutineItem = (props) => {
 
     return(
         <div style={{border: '1px solid grey', display: 'flex'}}>
-            <input placeholder={props.item.val} onChange={handleChange} value={itemVal}/> 
+            <input placeholder={props.item.val} onChange={handleChange} value={props.item.input}/> 
             <span>{props.item.name}</span>
         </div>
     )
