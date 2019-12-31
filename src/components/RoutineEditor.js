@@ -11,28 +11,51 @@ export default () => {
     const authUser = useSelector(state => state.sessionState.authUser);
 
     const [addingGroup, setAddingGroup] = useState(true);
+    const [routineInput, setRoutineInput] = useState([]);
+
+    // useEffect(() => {
+    //     console.log('routine: ');
+    //     console.log(routine);
+    //     dispatch(setRoutine(routine, authUser));
+    // },[routine, authUser, dispatch])
 
     useEffect(() => {
-        console.log('routine: ');
-        console.log(routine);
-        dispatch(setRoutine(routine, authUser));
+        setRoutineInput(routine);
     },[routine])
 
     const addGroup = () => {
         setAddingGroup(true);
     }
 
+    const syncRoutine = newRoutineInput => {
+        console.log('sync routine to server')
+        setRoutineInput(newRoutineInput);
+        dispatch(setRoutine(newRoutineInput, authUser));
+    }
+
     const saveGroup = (groupData) => {
-        dispatch(addGroupToRoutine(groupData));
+        const newRoutineInput = [...routineInput, groupData];
+        syncRoutine(newRoutineInput);
+        // dispatch(addGroupToRoutine(groupData));
     }
 
     const deleteGroup = (groupId) => {
-        console.log('delete group id', groupId);
-        dispatch(deleteGroupFromRoutine(groupId));
+        const newRoutineInput = routineInput.filter((group, index) => (
+            index !== groupId
+        ))
+        syncRoutine(newRoutineInput);
+        // console.log('delete group id', groupId);
+        // dispatch(deleteGroupFromRoutine(groupId));
     }
 
     const moveGroup = (groupId) => {
-        dispatch(reorderGroupInRoutine(groupId));
+        const i = groupId;
+        const j = groupId - 1;
+        if (j < 0) j = 0;
+        const newRoutineInput = [...routineInput];
+        [newRoutineInput[j], newRoutineInput[i]] = [newRoutineInput[i], newRoutineInput[j]];
+        syncRoutine(newRoutineInput);
+        // dispatch(reorderGroupInRoutine(groupId));
     }
 
     return(

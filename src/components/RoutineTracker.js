@@ -9,27 +9,59 @@ export default () => {
     const routine = useSelector(state => state.routineState.routine);
     const authUser = useSelector(state => state.sessionState.authUser);
 
+    const [trackInput, setTrackInput] = useState([]);
+
+    useEffect(() => {
+        setTrackInput(track);
+    },[track])
+
+    const syncTrack = newTrackInput => {
+        console.log('sync track to server')
+        setTrackInput(newTrackInput);
+        dispatch(setTrack(newTrackInput, authUser));
+    }
+
     const addEntry = () => {
-        dispatch(addEntryToTrack(
-            {
-                date: '',
-                routine: routine
-            }
-        ))
+        const newTrackInput = [...trackInput, {date: '', routine: routine}];
+        syncTrack(newTrackInput);
     }
 
     const deleteEntry = (entryId) => {
-        dispatch(deleteEntryFromTrack(entryId))
+        const newTrackInput = trackInput.filter((entry, index) => (
+            index !== entryId
+        ))
+        syncTrack(newTrackInput);
+
     }
 
-    useEffect(() => {
-        dispatch(setTrack(track, authUser));
-        console.log('track changed in RoutineTracker')
-    }, [track])
+    const editEntryField = (entryId, groupId, itemId, newVal) => {
+        const newTrackInput = trackInput.map((entry, entryIndex) => (
+            entryId !== entryIndex ? entry : {
+                ...entry,
+                routine: entry.routine.map((group, groupIndex) => (
+                    groupId !== groupIndex ? group : (
+                        group.map((item, itemIndex) => (
+                            itemId !== itemIndex ? item : {
+                                ...item,
+                                input: newVal
+                            }
+                        ))
+                    )
+                ))
+            }
+        ))
+        syncTrack(newTrackInput);
+
+    }
 
     const setEntryDate = (e, entryId) => {
-        console.log('setEntryDate:', e.target.value, entryId)
-        dispatch(editEntryDate(entryId, e.target.value))
+        const newTrackInput = trackInput.map((entry, entryIndex) => (
+            entryId !== entryIndex ? entry : {
+                ...entry,
+                date: e.target.value
+            }
+        ))
+        syncTrack(newTrackInput);
     }
 
     return(
@@ -39,7 +71,7 @@ export default () => {
                 {track.map((entry, index) => (
                     <div key={index} style={{background: 'darkgrey', margin: '10px'}}>
                         <input placeholder='date' style={{margin: '10px 0'}} value={entry.date} onChange={(e) => setEntryDate(e, index)}/>
-                        <Routine  routine={entry.routine} entryId={index}/>
+                        <Routine  routine={entry.routine} entryId={index} editEntryField={editEntryField}/>
                         <button onClick={() => deleteEntry(index)}>Delete Entry</button>
                     </div>
                 ))}
@@ -54,7 +86,7 @@ const Routine = (props) => {
     return(
         <div>
             {props.routine.map((group, index) => (
-                <RoutineGroup key={index} group={group} entryId={props.entryId} groupId={index}/>
+                <RoutineGroup key={index} group={group} entryId={props.entryId} groupId={index} editEntryField={props.editEntryField}/>
             ))}
         </div>
     )
@@ -64,7 +96,7 @@ const RoutineGroup = (props) => {
     return(
         <div style={{border: '1px solid white'}}>
             {props.group.map((item, index) => (
-                <RoutineItem key={index} item={item} entryId={props.entryId} groupId={props.groupId} itemId={index}/>
+                <RoutineItem key={index} item={item} entryId={props.entryId} groupId={props.groupId} itemId={index} editEntryField={props.editEntryField}/>
             ))
             }
             <br/>
@@ -73,16 +105,17 @@ const RoutineGroup = (props) => {
 }
 
 const RoutineItem = (props) => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     // const [itemVal, setItemVal] = useState(props.item.input);
 
     const handleChange = e => {
         // setItemVal(e.target.value);
 
-        dispatch(editEntryFieldInTrack(props.entryId, props.groupId, props.itemId, e.target.value))
+        // dispatch(editEntryFieldInTrack(props.entryId, props.groupId, props.itemId, e.target.value))
+        props.editEntryField(props.entryId, props.groupId, props.itemId, e.target.value);
 
-        console.log('edit', props.entryId, props.groupId, props.itemId, e.target.value);
+        // console.log('edit', props.entryId, props.groupId, props.itemId, e.target.value);
     }
 
     return(

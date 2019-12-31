@@ -4,6 +4,8 @@ import {createStore, applyMiddleware, compose} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import {reducer} from './reducers';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
 
 import './index.css';
 import App from './App';
@@ -13,10 +15,21 @@ const store = createStore(reducer, compose(applyMiddleware(thunk),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 );
 
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+        main: '#000000',
+        contrastText: '#fff'
+        },
+    }
+});
+
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>
+    <ThemeProvider theme={theme}>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </ThemeProvider>
 , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

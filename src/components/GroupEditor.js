@@ -3,9 +3,7 @@ import React, {useState} from 'react';
 export default (props) => {
     const [groupData, setGroupData] = useState([{val: '', name: ''},]);
 
-    // const [newGroup, setNewGroup] = useState([]);
     const newItem = {val: '', name: ''};
-
 
     const addItem = () => {
         setGroupData([...groupData, newItem])

@@ -1,3 +1,7 @@
+// export * from './authActions'
+// export * from './postsActions'
+// export * from './userActions'
+
 import {database, auth, googleProvider} from '../firebase';
 
 export const SET_AUTH_USER = 'SET_AUTH_USER';
@@ -61,6 +65,8 @@ const storeScratch = scratch => {
     }
 }
 
+// --------
+
 export const signInWithGoogle = () => {
     auth.signInWithPopup(googleProvider)
     .then(result => {
@@ -82,6 +88,8 @@ export const signOut = () => {
         console.log(err);
     })
 }
+
+// ---------
 
 export const addGroupToRoutine = newGroup => {
     return{

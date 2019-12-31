@@ -28,21 +28,20 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>'nother tracker</h1>
-        <button onClick={() => setEditRoutine(false)}>Track</button>
-        <button onClick={() => setEditRoutine(true)}>Edit</button>
-        <hr />
-        {editRoutine
-        ? <RoutineEditor />
-        : <RoutineTracker/>
-        }
         
-
         {authUser
         ? <button onClick={signOut}>Sign Out</button>
         : <button onClick={signInWithGoogle}>Sign in With Google</button>
         }
         <br/>
         {authUser && <div>
+          <button onClick={() => setEditRoutine(false)}>Track</button>
+          <button onClick={() => setEditRoutine(true)}>Edit</button>
+          <hr />
+          {editRoutine
+          ? <RoutineEditor />
+          : <RoutineTracker/>
+          }
           <hr/>
           <p>User ID: {authUser}</p>
           <textarea 
