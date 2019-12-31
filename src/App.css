@@ -1,6 +1,7 @@
 .trackGroup{
   background: rgb(173, 150, 220);
   border: 1px solid black;
+  padding: 5px;
 }
 
 .trackItem{
@@ -10,4 +11,12 @@
 .trackDateBox{
   background: lightgrey;
   border: 1px solid black;
+}
+
+.signInCont{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: grey;
 }

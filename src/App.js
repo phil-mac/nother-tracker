@@ -5,6 +5,7 @@ import {signInWithGoogle, signOut, fetchAuthUser, setScratch} from './actions';
 import './App.css'; 
 
 import DrawerNavWrapper from './components/DrawerNavWrapper';
+import SignIn from './components/SignIn';
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
       <header className="App-header">
         {authUser
           ? <DrawerNavWrapper signOut={signOut}/>
-          : <button onClick={signInWithGoogle}>Sign in With Google</button>
+          : <SignIn signInWithGoogle={signInWithGoogle}/>
         }
 
         

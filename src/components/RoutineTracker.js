@@ -101,7 +101,6 @@ const RoutineGroup = (props) => {
                 <RoutineItem key={index} item={item} entryId={props.entryId} groupId={props.groupId} itemId={index} editEntryField={props.editEntryField}/>
             ))
             }
-            <br/>
         </div>
     )
 }
