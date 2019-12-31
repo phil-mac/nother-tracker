@@ -1,9 +1,26 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
+import { makeStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import '../App.css'
 
 import {addEntryToTrack, deleteEntryFromTrack, setTrack, editEntryFieldInTrack, editEntryDate} from '../actions'
+
+const useStyles = makeStyles(theme => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    button: {
+        margin: theme.spacing(1),
+      },
+    }
+  }));
 
 export default () => {
     const dispatch = useDispatch();
@@ -65,21 +82,34 @@ export default () => {
         syncTrack(newTrackInput);
     }
 
+    const classes = useStyles();
+
     return(
-        <div style={{background: 'coral'}}>
-            <div style={{display: 'flex'}}>
-                {track.map((entry, index) => (
-                    <div key={index} >
-                        <div className='trackDateBox'>
-                            <input placeholder='date' style={{margin: '10px 0'}} value={entry.date} onChange={(e) => setEntryDate(e, index)}/>
-                        </div>
-                        <Routine  routine={entry.routine} entryId={index} editEntryField={editEntryField}/>
-                        <button onClick={() => deleteEntry(index)}>Delete Entry</button>
+        <div className='trackCont'>
+            {track.map((entry, index) => (
+                <div key={index} >
+                    <div className='trackDateBox'>
+                        <input placeholder='date' value={entry.date} onChange={(e) => setEntryDate(e, index)} className='trackDateField'/>
                     </div>
-                ))}
-                <button onClick={addEntry} style={{height: '20px', margin: '10px 0'}}>Add Entry</button>
+                    <Routine  routine={entry.routine} entryId={index} editEntryField={editEntryField}/>
+                    <div className='deleteEntryButtonDiv'>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            startIcon={<DeleteIcon />}
+                            onClick={() => deleteEntry(index)}
+                        >
+                            Delete
+                        </Button>
+                    </div>
+                </div>
+            ))}
+            <div className={classes.root}>
+                <Fab color="primary" aria-label="add" onClick={addEntry}>
+                    <AddIcon />
+                </Fab>
             </div>
-            <hr />
         </div>
     )
 }
@@ -112,7 +142,7 @@ const RoutineItem = (props) => {
 
     return(
         <div className='trackItem'>
-            <input placeholder={props.item.val} onChange={handleChange} value={props.item.input}/> 
+            <input placeholder={props.item.val} onChange={handleChange} value={props.item.input} className='trackField'/> 
             <span>{props.item.name}</span>
         </div>
     )

@@ -1,16 +1,53 @@
+.trackCont{
+  background: grey;
+  display: flex;
+}
+
 .trackGroup{
-  background: rgb(173, 150, 220);
+  background: rgb(196, 176, 235);
   border: 1px solid black;
-  padding: 5px;
+  padding: 0 3px;
 }
 
 .trackItem{
   display: flex;
+  margin: 4px 0;
+}
+
+.trackField{
+  width: 3rem;
+  margin: 0 3px;
+  border: none;
+  background: #F5F5F5;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.trackDateField{
+  width: 6rem;
+  border: none;
+
 }
 
 .trackDateBox{
   background: lightgrey;
   border: 1px solid black;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.deleteEntryButtonDiv{
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.deleteEntryButton{
+  width: 90%;
+}
+
+.addEntryButton{
+  height: 50px;
 }
 
 .signInCont{
@@ -20,3 +57,4 @@
   height: 100vh;
   background: grey;
 }
+
