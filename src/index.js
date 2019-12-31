@@ -6,14 +6,13 @@ import thunk from 'redux-thunk';
 import {reducer} from './reducers';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {BrowserRouter as Router} from 'react-router-dom';
+import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const store = createStore(reducer, compose(applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-);
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
 const theme = createMuiTheme({
     palette: {
