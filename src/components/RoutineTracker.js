@@ -6,6 +6,7 @@ import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 
 import '../App.css'
 
@@ -92,8 +93,11 @@ export default () => {
                         <input placeholder='date' value={entry.date} onChange={(e) => setEntryDate(e, index)} className='trackDateField'/>
                     </div>
                     <Routine  routine={entry.routine} entryId={index} editEntryField={editEntryField}/>
-                    <div className='deleteEntryButtonDiv' className='trackDateBox'>
-                        <Button
+                    <div className='deleteEntryButtonDiv' >
+                        <IconButton aria-label="delete" onClick={() => deleteEntry(index)}>
+                            <DeleteIcon />
+                        </IconButton>
+                        {/* <Button
                             variant="contained"
                             color="primary"
                             className={classes.button}
@@ -101,7 +105,7 @@ export default () => {
                             onClick={() => deleteEntry(index)}
                         >
                             Delete
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
             ))}

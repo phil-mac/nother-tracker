@@ -37,13 +37,18 @@
 }
 
 .deleteEntryButtonDiv{
+  background: lightgrey;
+  border: 1px solid black;
   display: flex;
   justify-content: center;
-  padding: 10px 0;
+  /* height: 3rem; */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* padding: 10px 0; */
 }
 
 .deleteEntryButton{
-  width: 90%;
+  /* width: 90%; */
 }
 
 .addEntryButton{
