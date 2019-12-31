@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import {reducer} from './reducers';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-
+import {BrowserRouter as Router} from 'react-router-dom';
 
 import './index.css';
 import App from './App';
@@ -25,11 +25,13 @@ const theme = createMuiTheme({
 });
 
 ReactDOM.render(
-    <ThemeProvider theme={theme}>
-        <Provider store={store}>
-            <App />
-        </Provider>
-    </ThemeProvider>
+    <Router>
+        <ThemeProvider theme={theme}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </ThemeProvider>
+    </Router>
 , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

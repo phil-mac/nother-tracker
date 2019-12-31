@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
+import '../App.css'
+
 import {addEntryToTrack, deleteEntryFromTrack, setTrack, editEntryFieldInTrack, editEntryDate} from '../actions'
 
 export default () => {
@@ -51,7 +53,6 @@ export default () => {
             }
         ))
         syncTrack(newTrackInput);
-
     }
 
     const setEntryDate = (e, entryId) => {
@@ -65,12 +66,13 @@ export default () => {
     }
 
     return(
-        <div>
-            <h3>Track Routine</h3>
+        <div style={{background: 'coral'}}>
             <div style={{display: 'flex'}}>
                 {track.map((entry, index) => (
-                    <div key={index} style={{background: 'darkgrey', margin: '10px'}}>
-                        <input placeholder='date' style={{margin: '10px 0'}} value={entry.date} onChange={(e) => setEntryDate(e, index)}/>
+                    <div key={index} >
+                        <div className='trackDateBox'>
+                            <input placeholder='date' style={{margin: '10px 0'}} value={entry.date} onChange={(e) => setEntryDate(e, index)}/>
+                        </div>
                         <Routine  routine={entry.routine} entryId={index} editEntryField={editEntryField}/>
                         <button onClick={() => deleteEntry(index)}>Delete Entry</button>
                     </div>
@@ -94,7 +96,7 @@ const Routine = (props) => {
 
 const RoutineGroup = (props) => {
     return(
-        <div style={{border: '1px solid white'}}>
+        <div className='trackGroup'>
             {props.group.map((item, index) => (
                 <RoutineItem key={index} item={item} entryId={props.entryId} groupId={props.groupId} itemId={index} editEntryField={props.editEntryField}/>
             ))
@@ -105,21 +107,12 @@ const RoutineGroup = (props) => {
 }
 
 const RoutineItem = (props) => {
-    // const dispatch = useDispatch();
-
-    // const [itemVal, setItemVal] = useState(props.item.input);
-
     const handleChange = e => {
-        // setItemVal(e.target.value);
-
-        // dispatch(editEntryFieldInTrack(props.entryId, props.groupId, props.itemId, e.target.value))
         props.editEntryField(props.entryId, props.groupId, props.itemId, e.target.value);
-
-        // console.log('edit', props.entryId, props.groupId, props.itemId, e.target.value);
     }
 
     return(
-        <div style={{border: '1px solid grey', display: 'flex'}}>
+        <div className='trackItem'>
             <input placeholder={props.item.val} onChange={handleChange} value={props.item.input}/> 
             <span>{props.item.name}</span>
         </div>

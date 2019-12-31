@@ -4,32 +4,36 @@ import {useSelector, useDispatch} from 'react-redux';
 import {signInWithGoogle, signOut, fetchAuthUser, setScratch} from './actions';
 import './App.css'; 
 
-import TestComp from './components/TestComp';
-import RoutineEditor from './components/RoutineEditor';
-import RoutineTracker from './components/RoutineTracker';
+import DrawerNavWrapper from './components/DrawerNavWrapper';
 
 
 function App() {
   const dispatch = useDispatch();
-  const scratch = useSelector(state => state.scratchState.scratch);
+  // const scratch = useSelector(state => state.scratchState.scratch);
   const authUser = useSelector(state => state.sessionState.authUser);
-  const [editRoutine, setEditRoutine] = useState(false);
+  // const [editRoutine, setEditRoutine] = useState(false);
 
   useEffect(() => {
     dispatch(fetchAuthUser());
   },[])
 
-  const setNote = e => {
-    const newText = e.target.value;
-    dispatch(setScratch(newText, authUser));
-  };
+  // const setNote = e => {
+  //   const newText = e.target.value;
+  //   dispatch(setScratch(newText, authUser));
+  // };
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>'nother tracker</h1>
-        
         {authUser
+          ? <DrawerNavWrapper signOut={signOut}/>
+          : <button onClick={signInWithGoogle}>Sign in With Google</button>
+        }
+
+        
+        {/* <Navigation /> */}
+        
+        {/* {authUser
         ? <button onClick={signOut}>Sign Out</button>
         : <button onClick={signInWithGoogle}>Sign in With Google</button>
         }
@@ -51,7 +55,7 @@ function App() {
           style={{width: '80%', height:'200px'}}
           />
           <hr/>
-        </div>}
+        </div>} */}
 
       </header>
     </div>

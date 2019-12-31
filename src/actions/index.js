@@ -8,15 +8,15 @@ export const SET_AUTH_USER = 'SET_AUTH_USER';
 export const SET_SCRATCH = 'SET_SCRATCH';
 
 export const SET_ROUTINE = 'SET_ROUTINE';
-export const ADD_GROUP_TO_ROUTINE = 'ADD_GROUP_TO_ROUTINE';
-export const DELETE_GROUP_FROM_ROUTINE = 'DELETE_GROUP_FROM_ROUTINE';
-export const REORDER_GROUP_IN_ROUTINE = 'REORDER_GROUP_IN_ROUTINE';
+// export const ADD_GROUP_TO_ROUTINE = 'ADD_GROUP_TO_ROUTINE';
+// export const DELETE_GROUP_FROM_ROUTINE = 'DELETE_GROUP_FROM_ROUTINE';
+// export const REORDER_GROUP_IN_ROUTINE = 'REORDER_GROUP_IN_ROUTINE';
 
 export const SET_TRACK = 'SET_TRACK';
-export const ADD_ENTRY_TO_TRACK = 'ADD_ENTRY_TO_TRACK';
-export const DELETE_ENTRY_FROM_TRACK = 'DELETE_ENTRY_FROM_TRACK';
-export const EDIT_ENTRY_FIELD_IN_TRACK = 'EDIT_ENTRY_FIELD_IN_TRACK';
-export const EDIT_ENTRY_DATE = 'EDIT_ENTRY_DATE';
+// export const ADD_ENTRY_TO_TRACK = 'ADD_ENTRY_TO_TRACK';
+// export const DELETE_ENTRY_FROM_TRACK = 'DELETE_ENTRY_FROM_TRACK';
+// export const EDIT_ENTRY_FIELD_IN_TRACK = 'EDIT_ENTRY_FIELD_IN_TRACK';
+// export const EDIT_ENTRY_DATE = 'EDIT_ENTRY_DATE';
 
 export const fetchAuthUser = () => dispatch => {
     auth.onAuthStateChanged(user => {
@@ -91,26 +91,26 @@ export const signOut = () => {
 
 // ---------
 
-export const addGroupToRoutine = newGroup => {
-    return{
-        type: ADD_GROUP_TO_ROUTINE,
-        payload: newGroup
-    }
-}
+// export const addGroupToRoutine = newGroup => {
+//     return{
+//         type: ADD_GROUP_TO_ROUTINE,
+//         payload: newGroup
+//     }
+// }
 
-export const deleteGroupFromRoutine = groupId => {
-    return{
-        type: DELETE_GROUP_FROM_ROUTINE,
-        payload: groupId
-    }
-}
+// export const deleteGroupFromRoutine = groupId => {
+//     return{
+//         type: DELETE_GROUP_FROM_ROUTINE,
+//         payload: groupId
+//     }
+// }
 
-export const reorderGroupInRoutine = groupId => {
-    return{
-        type: REORDER_GROUP_IN_ROUTINE,
-        payload: {groupId: groupId}
-    }
-}
+// export const reorderGroupInRoutine = groupId => {
+//     return{
+//         type: REORDER_GROUP_IN_ROUTINE,
+//         payload: {groupId: groupId}
+//     }
+// }
 
 export const setRoutine = (routine, authUser) => dispatch =>{
     database
@@ -140,43 +140,43 @@ const storeRoutine = routine => {
 
 // ---
 
-export const addEntryToTrack = newEntry => {
-    return{
-        type: ADD_ENTRY_TO_TRACK,
-        payload: newEntry
-    }
-}
+// export const addEntryToTrack = newEntry => {
+//     return{
+//         type: ADD_ENTRY_TO_TRACK,
+//         payload: newEntry
+//     }
+// }
 
-export const deleteEntryFromTrack = entryId => {
-    return{
-        type: DELETE_ENTRY_FROM_TRACK,
-        payload: entryId
-    }
-}
+// export const deleteEntryFromTrack = entryId => {
+//     return{
+//         type: DELETE_ENTRY_FROM_TRACK,
+//         payload: entryId
+//     }
+// }
 
-export const editEntryFieldInTrack = (entryId, groupId, itemId, newVal) => {
-    console.log('action edit', entryId, groupId,itemId, newVal);
+// export const editEntryFieldInTrack = (entryId, groupId, itemId, newVal) => {
+//     console.log('action edit', entryId, groupId,itemId, newVal);
 
-    return{
-        type: EDIT_ENTRY_FIELD_IN_TRACK,
-        payload: {
-            entryId: entryId,
-            groupId: groupId,
-            itemId: itemId,
-            newVal: newVal
-        }
-    }
-}
+//     return{
+//         type: EDIT_ENTRY_FIELD_IN_TRACK,
+//         payload: {
+//             entryId: entryId,
+//             groupId: groupId,
+//             itemId: itemId,
+//             newVal: newVal
+//         }
+//     }
+// }
 
-export const editEntryDate = (entryId, newDate) => {
-    return{
-        type: EDIT_ENTRY_DATE,
-        payload: {
-            entryId: entryId,
-            newDate: newDate
-        }
-    }
-}
+// export const editEntryDate = (entryId, newDate) => {
+//     return{
+//         type: EDIT_ENTRY_DATE,
+//         payload: {
+//             entryId: entryId,
+//             newDate: newDate
+//         }
+//     }
+// }
 
 export const setTrack = (track, authUser) => dispatch => {
     database
