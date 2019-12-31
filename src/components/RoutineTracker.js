@@ -92,7 +92,7 @@ export default () => {
                         <input placeholder='date' value={entry.date} onChange={(e) => setEntryDate(e, index)} className='trackDateField'/>
                     </div>
                     <Routine  routine={entry.routine} entryId={index} editEntryField={editEntryField}/>
-                    <div className='deleteEntryButtonDiv'>
+                    <div className='deleteEntryButtonDiv' className='trackDateBox'>
                         <Button
                             variant="contained"
                             color="primary"
