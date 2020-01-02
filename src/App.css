@@ -12,10 +12,11 @@
 .trackItem{
   display: flex;
   margin: 4px 0;
+  /* font-size: 1px; */
 }
 
 .trackField{
-  width: 3rem;
+  width: 2.4rem;
   margin: 0 3px;
   border: none;
   background: #F5F5F5;
@@ -47,13 +48,39 @@
   /* padding: 10px 0; */
 }
 
-.deleteEntryButton{
-  /* width: 90%; */
-}
+/* .deleteEntryButton{
+   width: 90%; 
+} */
 
-.addEntryButton{
+/* .addEntryButton{
   height: 50px;
 }
+
+.incrementButton{
+  height: 1.3rem;
+  width: 1.3rem;
+  background: black;
+  color: white;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 1px 2px black;
+  margin-right: 0.3rem;
+  margin-left: 0.3rem;
+  outline: none;
+}
+*/
+
+.fabTest{
+  margin-right: 0.3rem;
+  margin-left: 0.3rem;
+} 
+
+/* .incrementAddIcon{
+  font-size: 20px;
+} */
+
+/* ---- */
 
 .signInCont{
   display: flex;

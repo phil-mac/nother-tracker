@@ -97,15 +97,6 @@ export default () => {
                         <IconButton aria-label="delete" onClick={() => deleteEntry(index)}>
                             <DeleteIcon />
                         </IconButton>
-                        {/* <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.button}
-                            startIcon={<DeleteIcon />}
-                            onClick={() => deleteEntry(index)}
-                        >
-                            Delete
-                        </Button> */}
                     </div>
                 </div>
             ))}
@@ -144,9 +135,25 @@ const RoutineItem = (props) => {
         props.editEntryField(props.entryId, props.groupId, props.itemId, e.target.value);
     }
 
+    const handleIncrement = () => {
+        let newVal = parseInt(props.item.increment);
+        if (props.item.input){
+            newVal = parseInt(props.item.input) + parseInt(props.item.increment);
+        }
+        props.editEntryField(props.entryId, props.groupId, props.itemId, newVal);
+    }
+
     return(
         <div className='trackItem'>
             <input placeholder={props.item.val} onChange={handleChange} value={props.item.input} className='trackField'/> 
+            {props.item.increment && 
+                <>
+                <Fab onClick={handleIncrement} color="primary" aria-label="add" size='small' className='fabTest'>
+                    <AddIcon fontSize='inherit'/>
+                </Fab>
+                </>
+            }
+            
             <span>{props.item.name}</span>
         </div>
     )

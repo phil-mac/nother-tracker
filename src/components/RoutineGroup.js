@@ -15,7 +15,8 @@ export default (props) => {
 const RoutineItem = (props) => {
     return(
         <div style={{border: '1px solid grey', display: 'flex'}}>
-            <input placeholder={props.item.val} /> 
+            <input placeholder={props.item.val} disabled/>
+            {props.item.increment && <span>+ {props.item.increment}</span>} 
             <span>{props.item.name}</span>
         </div>
     )

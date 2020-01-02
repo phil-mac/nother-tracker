@@ -20,7 +20,23 @@ const theme = createMuiTheme({
         main: '#000000',
         contrastText: '#fff'
         },
-    }
+    },
+    overrides: {
+        // Style sheet name ⚛️
+        MuiFab: {
+          // Name of the rule
+          sizeSmall: {
+            // Some CSS
+            height: '1.3rem',
+            minHeight: '0px',
+
+            width: '1.3rem',
+            marginRight: '0.2rem',
+            marginLeft: '0.2rem',
+            fontSize: '1.0rem'
+          },
+        },
+      },
 });
 
 ReactDOM.render(

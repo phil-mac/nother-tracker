@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 export default (props) => {
     const [groupData, setGroupData] = useState([{val: '', name: ''},]);
 
-    const newItem = {val: '', name: ''};
+    const newItem = {val: '', name: '', increment: ''};
 
     const addItem = () => {
         setGroupData([...groupData, newItem])
@@ -36,7 +36,7 @@ export default (props) => {
 }
 
 const ItemEditor = (props) => {
-    const [newItem, setNewItem] = useState({id: props.itemId, val: '', name: ''});
+    const [newItem, setNewItem] = useState({id: props.itemId, val: '', name: '', increment: ''});
 
     const handleChange = e => {
         // update the appropriate variable of the appropriate ITEM of groupData
@@ -48,6 +48,7 @@ const ItemEditor = (props) => {
     return(
         <div style={{border: '1px solid grey', display: 'flex'}}>
             <input name='val' placeholder='value' onChange={handleChange} value={newItem.value}/> 
+            <input name='increment' placeholder='increment' onChange={handleChange} value={newItem.increment}/> 
             <input name='name' placeholder='name' onChange={handleChange} value={newItem.name}/> 
         </div>
     )
