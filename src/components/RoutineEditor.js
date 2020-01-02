@@ -10,6 +10,8 @@ export default () => {
     const routine = useSelector(state => state.routineState.routine);
     const authUser = useSelector(state => state.sessionState.authUser);
 
+    const [idOfGroupEditting, setIdOfGroupEditting] = useState(-1);
+
     const [addingGroup, setAddingGroup] = useState(true);
     const [routineInput, setRoutineInput] = useState([]);
 
@@ -33,7 +35,17 @@ export default () => {
         dispatch(setRoutine(newRoutineInput, authUser));
     }
 
-    const saveGroup = (groupData) => {
+    const saveEdittedGroup = (groupData, groupId) => {
+        const newRoutineInput = routineInput.map((group, id) => (
+            groupId === id ? groupData : group   
+        ))
+        console.log('save editted group:');
+        console.log(groupData);
+        syncRoutine(newRoutineInput);
+        setIdOfGroupEditting(-1);
+    }
+
+    const saveNewGroup = (groupData) => {
         const newRoutineInput = [...routineInput, groupData];
         syncRoutine(newRoutineInput);
         // dispatch(addGroupToRoutine(groupData));
@@ -58,22 +70,25 @@ export default () => {
         // dispatch(reorderGroupInRoutine(groupId));
     }
 
+    const editGroup = groupId => {
+        setIdOfGroupEditting(groupId);
+    }
+
     return(
         <div>
             <h3>Edit Routine</h3>
-            {routine.map((group, index) => (
-                <div key={index}>
-                    <div style={{border:'1px solid white'}}>
-                        <RoutineGroup  group={group}/>
-                        <button onClick={() => deleteGroup(index)}>Delete</button>
-                        <button onClick={() => moveGroup(index)}>Move Up</button>
-                    </div>
-                    <br/>
-                    <br/>
-
-                </div>
-            ))}
-            {addingGroup && <GroupEditor saveGroup={saveGroup}/>}
+            {routineInput.map((group, index) => 
+                idOfGroupEditting === index 
+                ? <GroupEditor startingData={group} editId={index} saveEdittedGroup={saveEdittedGroup}/>
+                : <div key={index} style={{border:'1px solid white'}}>
+                    <RoutineGroup  group={group}/>
+                    <button onClick={() => deleteGroup(index)}>Delete</button>
+                    <button onClick={() => moveGroup(index)}>Move Up</button>
+                    <button onClick={() => editGroup(index)}>Edit</button>
+                  </div>
+                
+            )}
+            {addingGroup && <GroupEditor saveNewGroup={saveNewGroup}/>}
             <button onClick={addGroup}> + </button>
             <hr />
         </div>
