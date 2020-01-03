@@ -82,6 +82,22 @@
 
 /* ---- */
 
+.colorPickerCont{
+  background: lightgrey;
+  padding: 3px;
+  margin: 3px;
+  /* height: 10px;
+  width: 60px; */
+}
+
+.testColor{
+  background: mediumpurple;
+  border-radius: 10px;
+  border: none;
+  height: 15px;
+  width: 15px;
+}
+
 .signInCont{
   display: flex;
   justify-content: center;

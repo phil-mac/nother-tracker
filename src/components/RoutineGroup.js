@@ -2,8 +2,8 @@ import React from 'react';
 
 export default (props) => {
     return(
-        <div style={{border: '1px solid white'}}>
-            {props.group.map((item, index) => (
+        <div style={{border: '1px solid black', background: props.group.color}}>
+            {props.group.items.map((item, index) => (
                 <RoutineItem item={item} key={index}/>
             ))
             }

@@ -60,12 +60,12 @@ export default () => {
                 ...entry,
                 routine: entry.routine.map((group, groupIndex) => (
                     groupId !== groupIndex ? group : (
-                        group.map((item, itemIndex) => (
+                        {...group, items: group.items.map((item, itemIndex) => (
                             itemId !== itemIndex ? item : {
                                 ...item,
                                 input: newVal
                             }
-                        ))
+                        ))}
                     )
                 ))
             }
@@ -121,8 +121,8 @@ const Routine = (props) => {
 
 const RoutineGroup = (props) => {
     return(
-        <div className='trackGroup'>
-            {props.group.map((item, index) => (
+        <div className='trackGroup' style={{background: props.group.color}}>
+            {props.group.items.map((item, index) => (
                 <RoutineItem key={index} item={item} entryId={props.entryId} groupId={props.groupId} itemId={index} editEntryField={props.editEntryField}/>
             ))
             }

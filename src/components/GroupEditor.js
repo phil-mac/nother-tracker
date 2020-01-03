@@ -4,24 +4,16 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
+import ColorPicker from './ColorPicker';
 
 export default (props) => {
-    // const [groupData, setGroupData] = useState([{val: '', name: ''},]);
-    // useEffect(() => {
-    //     if(props.startingData){
-    //         console.log('got starting data');
-    //         console.log(props.startingData);
-    //         setGroupData(props.startingData);
-    //     }
-    // },[])
-
-    const [groupData, setGroupData] = useState(props.startingData ? props.startingData : [{val: '', name: ''},]);
+    const [groupData, setGroupData] = useState(props.startingData ? props.startingData : {color: 'lightgrey', items:[{val: '', name: ''},]});
     
 
     const newItem = {val: '', name: '', increment: ''};
 
     const addItem = () => {
-        setGroupData([...groupData, newItem])
+        setGroupData({...groupData, items: [...groupData.items, newItem]})
     }
 
     const saveGroup = () => {
@@ -33,12 +25,18 @@ export default (props) => {
     }
 
     const updateGroup = (itemId, updatedItem) => {
-        const updatedGroupData = groupData.map((item, index) => (
+        const updatedItems = groupData.items.map((item, index) => (
             itemId === index ? updatedItem : item
         ))
         
-        setGroupData(updatedGroupData)
-        console.log(updatedGroupData);
+        setGroupData({...groupData, items: updatedItems})
+    }
+
+    const deleteItem = (itemId) => {
+        const updatedItems = groupData.items.filter((item, index) => (
+            index !== itemId
+        ))
+        setGroupData({...groupData, items: updatedItems});
     }
 
     const reorderItem = (itemId, moveUp) => {
@@ -46,17 +44,22 @@ export default (props) => {
         let j = itemId;
         moveUp ? (j = itemId - 1) : (j = itemId + 1);
         if (j < 0) j = 0;
-        if (j > groupData.length - 1) j = groupData.length - 1;
+        if (j > groupData.items.length - 1) j = groupData.items.length - 1;
         
-        const newGroupData = [...groupData];
-        [newGroupData[j], newGroupData[i]] = [newGroupData[i], newGroupData[j]];
-        setGroupData(newGroupData);
+        const newItems = [...groupData.items];
+        [newItems[j], newItems[i]] = [newItems[i], newItems[j]];
+        setGroupData({...groupData, items: newItems});
+    }
+
+    const setGroupColor = (newColor) => {
+        setGroupData({...groupData, color: newColor})
     }
 
     return(
-        <div style={{border: '3px solid cyan'}}>
-            {groupData.map((item, index) => (
-                <ItemEditor key={index} item={item} itemId={index} updateGroup={updateGroup} reorderItem={reorderItem}/>
+        <div style={{border: '3px solid cyan', background: groupData.color}}>
+            <ColorPicker setGroupColor={setGroupColor}/>
+            {groupData.items.map((item, index) => (
+                <ItemEditor key={index} item={item} itemId={index} updateGroup={updateGroup} reorderItem={reorderItem} deleteItem={deleteItem}/>
             ))}
             <button onClick={addItem}> + </button>
             <br/>
@@ -93,7 +96,7 @@ const ItemEditor = (props) => {
             <IconButton aria-label="delete" size="small" onClick={() => props.reorderItem(props.itemId, false)}>
                 <ArrowDownwardIcon fontSize="inherit" />
             </IconButton>
-            <IconButton color='primary' aria-label="delete" onClick={() => {}} size='small'>
+            <IconButton color='primary' aria-label="delete" onClick={() => props.deleteItem(props.itemId)} size='small'>
                 <DeleteIcon fontSize="inherit" />
             </IconButton>
         </div>
