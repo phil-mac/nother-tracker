@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import '../App.css'
 import * as DateUtil from '../utils/date';
+import * as completionFaderUtil from '../utils/completionFader';
 
 import {addEntryToTrack, deleteEntryFromTrack, setTrack, editEntryFieldInTrack, editEntryDate} from '../actions'
 
@@ -37,7 +38,6 @@ export default () => {
     },[track])
 
     const syncTrack = newTrackInput => {
-        console.log('sync track to server')
         setTrackInput(newTrackInput);
         dispatch(setTrack(newTrackInput, authUser));
     }
@@ -146,9 +146,26 @@ const RoutineItem = (props) => {
         props.editEntryField(props.entryId, props.groupId, props.itemId, newVal);
     }
 
+    const isCompleted = () => {
+        if (parseInt(props.item.input) >= parseInt(props.item.val)){
+            return 'trackField completedField'
+        } else{
+            return 'trackField';
+        }
+    }
+
     return(
         <div className='trackItem'>
-            <input placeholder={props.item.val} onChange={handleChange} value={props.item.input} className='trackField'/> 
+            <input 
+                placeholder={props.item.val} 
+                onChange={handleChange} 
+                value={props.item.input} 
+                className={isCompleted()}
+                style={{
+                    background: completionFaderUtil.getBackgroundColor(props.item.val, props.item.input),
+                    color: completionFaderUtil.getTextColor(props.item.val, props.item.input)
+                    }}
+            /> 
             {props.item.increment && 
                 <>
                 <Fab onClick={handleIncrement} color="primary" aria-label="add" size='small' className='fabTest'>
@@ -156,7 +173,6 @@ const RoutineItem = (props) => {
                 </Fab>
                 </>
             }
-            
             <span>{props.item.name}</span>
         </div>
     )

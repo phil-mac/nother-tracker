@@ -191,7 +191,6 @@ export const fetchTrack = authUser => dispatch => {
             const val = snapshot.val();
             if(val){
                 dispatch(storeTrack(val));
-                console.log('fetched new track from server')
             } else{
                 dispatch(storeTrack([]))
             }
