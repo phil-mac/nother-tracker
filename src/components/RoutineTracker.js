@@ -9,6 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 
 import '../App.css'
+import * as DateUtil from '../utils/date';
 
 import {addEntryToTrack, deleteEntryFromTrack, setTrack, editEntryFieldInTrack, editEntryDate} from '../actions'
 
@@ -42,8 +43,10 @@ export default () => {
     }
 
     const addEntry = () => {
-        const newTrackInput = [...trackInput, {date: '', routine: routine}];
+        const currentTime = Date.now();
+        const newTrackInput = [...trackInput, {timeCreated: currentTime, date: DateUtil.formatDate(currentTime), routine: routine}];
         syncTrack(newTrackInput);
+        console.log()
     }
 
     const deleteEntry = (entryId) => {
